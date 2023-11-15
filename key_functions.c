@@ -7,7 +7,7 @@
 
 void show_prompt(void)
 {
-	myprint("my_shell$ ");
+	myprint("cisfun$ ");
 }
 
 
