@@ -10,9 +10,9 @@ char command[120];
 
 while (true)
 {
-        show_prompt();
-        read_input(command, sizeof(command));
-        execute_command(command);
+	show_prompt();
+	read_input(command, sizeof(command));
+	execute_command(command);
 }
 return (0);
 }

@@ -7,7 +7,7 @@
 
 void show_prompt(void)
 {
-        myprint("my_shell$ ");
+	myprint("my_shell$ ");
 }
 
 
@@ -19,20 +19,20 @@ void show_prompt(void)
 
 void read_input(char *command, size_t size)
 {
-        if (fgets(command, size, stdin) == NULL)
-        {
-                if (feof(stdin))
-                {
-                        myprint("\n");
-                        exit(EXIT_SUCCESS);
-                }
-                else
-                {
-                        myprint("Error Reading input.\n");
-                        exit(EXIT_FAILURE);
-                }
-        }
-        command[strcspn(command, "\n")] = '\0';
+	if (fgets(command, size, stdin) == NULL)
+	{
+		if (feof(stdin))
+		{
+			myprint("\n");
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			myprint("Error Reading input.\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	command[strcspn(command, "\n")] = '\0';
 }
 
 
@@ -42,7 +42,7 @@ void read_input(char *command, size_t size)
  */
 void myprint(const char *string)
 {
-        write(STDOUT_FILENO, string, strlen(string));
+	write(STDOUT_FILENO, string, strlen(string));
 }
 
 /**
@@ -52,38 +52,36 @@ void myprint(const char *string)
 
 void execute_command(const char *command)
 {
-        pid_t child = fork();
+	pid_t child = fork();
 
-        if (child == -1)
-        {
-                myprint("Error forking process.\n");
-                exit(EXIT_FAILURE);
-        }
+	if (child == -1)
+	{
+		myprint("Error forking process.\n");
+		exit(EXIT_FAILURE);
+	}
 
-        else if (child == 0)
-        {
-        /* child process */
-        /* Tokenize input into:command and its arguments*/
-        char *args[120]; /* Maximum 120 char */
-        int arg_count = 0;
+	else if (child == 0)
+	{
+		/* child process */
+		/* Tokenize input into:command and its arguments*/
+		char *args[120]; /* Maximum 120 char */
+	int arg_count = 0;
+	char *token = strtok((char *)command, " ");
 
-        char *token = strtok((char *)command, " ");
-
-        while (token != NULL)
-        {
-                args[arg_count++] = token;
-                token = strtok(NULL, " ");
-        }
-
-        args[arg_count] = NULL; /*Null-terminate the arguments array*/
-        /* execute the command */
-        execvp(args[0], args);
-        /* If execvp fails, print an error message */
-        myprint("Error executing command.\n");
-        exit(EXIT_FAILURE);
-        }
-        else
-        {
-                wait(NULL);
-        }
+	while (token != NULL)
+	{
+		args[arg_count++] = token;
+		token = strtok(NULL, " ");
+	}
+	args[arg_count] = NULL; /*Null-terminate the arguments array*/
+	/* execute the command */
+	execvp(args[0], args);
+	/* If execvp fails, print an error message */
+	myprint("Error executing command.\n");
+	exit(EXIT_FAILURE);
+	}
+	else
+	{
+		wait(NULL);
+	}
 }
