@@ -13,6 +13,6 @@ void show_prompt(void);
 void myprint(const char *message);
 void read_input(char *command, size_t size);
 void execute_command(const char *command);
-
+char *rmnlc(char *str, int lnt);
 
 #endif /* SHELL_H */
